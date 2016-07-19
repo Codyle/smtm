@@ -15,6 +15,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdio.h>
+#include <Windows.h>
+#include <getopt/getopt.h>
+#include <smtm/smtm.h>
+
+#define OPTS_SHORT_STRING "hv"
+
+static const struct option opt_define[] = {
+        { "version", no_argument, NULL, 'v' },
+        { "help", no_argument, NULL, 'h' },
+        { NULL, 0, NULL, 0 }
+};
+
+static void display_version(void) {
+    fprintf(stdout, "%s\n", SMTM_VERSION);
+}
+
+static void display_help(void) {
+    fprintf(stdout, "usage: smtm [-v|--version] [-h|--help] FILE\n");
+}
+
 int main(int argc, char** argv) {
+
+    do {
+        optopt = getopt_long(argc, argv, OPTS_SHORT_STRING, opt_define, &optind);
+
+        switch (optopt) {
+            case 'v':
+                display_version();
+                return 0;
+            case 'h':
+                display_help();
+                return 0;
+            default:
+                /* You won't actually get here */
+                break;
+        }
+    } while (optopt != -1);
+
     return 0;
 }
