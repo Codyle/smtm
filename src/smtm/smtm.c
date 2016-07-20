@@ -15,11 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __SMTM_H__
-#define __SMTM_H__
+#include <lua/lua.h>
+#include <lua/lualib.h>
+#include <lua/lauxlib.h>
+#include <smtm/smtm.h>
 
-#define SMTM_VERSION "1.0.0"
+int smtm_run_script(const char* filename) {
+    lua_State* L;
+    int result;
 
-int smtm_run_script(const char* filename);
+    L = luaL_newstate();
+    luaL_openlibs(L);
 
-#endif /* __SMTM_H__ */
+    luaL_loadfile(L, filename);
+
+    result = lua_pcall(L, 0, LUA_MULTRET, 0);
+
+    if (result != LUA_OK) {
+        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
+    }
+
+    lua_close(L);
+
+    return result;
+}
