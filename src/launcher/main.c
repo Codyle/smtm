@@ -37,6 +37,7 @@ static void display_help(void) {
 }
 
 int main(int argc, char** argv) {
+    char* filename;
 
     do {
         optopt = getopt_long(argc, argv, OPTS_SHORT_STRING, opt_define, &optind);
@@ -54,5 +55,23 @@ int main(int argc, char** argv) {
         }
     } while (optopt != -1);
 
-    return 0;
+    /* If FILE argument is missing */
+    if (optind >= argc) {
+        display_help();
+        return 0;
+    }
+
+    filename = argv[optind];
+
+    if (_access(filename, 0) == -1) {
+        fprintf(stderr, "file '%s' not exists.\n", filename);
+        return -1;
+    }
+
+    if (_access(filename, 4) == -1) {
+        fprintf(stderr, "file '%s' is not readable.\n", filename);
+        return -1;
+    }
+
+    return smtm_run_script(filename);
 }
