@@ -18,9 +18,18 @@
     <ClInclude Include="..\..\include\smtm\smtm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\smtm\lsmtmlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\smtm\smtm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\smtm\lsmtmlib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\smtm\lsmtmconst.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

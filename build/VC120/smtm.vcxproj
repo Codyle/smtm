@@ -77,9 +77,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\smtm\lsmtmlib.h" />
     <ClInclude Include="..\..\include\smtm\smtm.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\smtm\lsmtmconst.c" />
+    <ClCompile Include="..\..\src\smtm\lsmtmlib.c" />
     <ClCompile Include="..\..\src\smtm\smtm.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

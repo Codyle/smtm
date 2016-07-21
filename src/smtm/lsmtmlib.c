@@ -15,33 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <lua/lua.h>
-#include <lua/lualib.h>
-#include <lua/lauxlib.h>
-#include <smtm/smtm.h>
 #include <smtm/lsmtmlib.h>
 
-int smtm_run_script(const char* filename) {
-    lua_State* L;
-    int result;
+LUAMOD_API int luaopen_smtm(lua_State* L) {
+    luaconst_smtm(L);
 
-    L = luaL_newstate();
-    luaL_openlibs(L);
-
-    luaL_requiref(L, "smtm", luaopen_smtm, 1);
-
-    lua_pop(L, 1);
-
-    luaL_loadfile(L, filename);
-
-    result = lua_pcall(L, 0, LUA_MULTRET, 0);
-
-    if (result != LUA_OK) {
-        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
-        lua_pop(L, 1);
-    }
-
-    lua_close(L);
-
-    return result;
+    return 1;
 }
