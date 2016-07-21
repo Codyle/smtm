@@ -21,6 +21,9 @@
     <ClInclude Include="..\..\include\smtm\lsmtmlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\smtm\lwapilib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\smtm\smtm.c">
@@ -30,6 +33,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\smtm\lsmtmconst.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\smtm\lwapilib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

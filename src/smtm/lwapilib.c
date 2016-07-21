@@ -15,35 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Windows.h>
 #include <lua/lua.h>
 #include <lua/lualib.h>
 #include <lua/lauxlib.h>
-#include <smtm/smtm.h>
-#include <smtm/lsmtmlib.h>
 #include <smtm/lwapilib.h>
 
-int smtm_run_script(const char* filename) {
-    lua_State* L;
-    int result;
+static int wapi_FindWindow(lua_State* L) {
+    const char* cname = luaL_optstring(L, 1, NULL);
+    const char* wname = luaL_optstring(L, 2, NULL);
 
-    L = luaL_newstate();
-    luaL_openlibs(L);
-
-    luaL_requiref(L, "smtm", luaopen_smtm, 1);
-    luaL_requiref(L, "wapi", luaopen_wapi, 1);
-
-    lua_pop(L, 1);
-
-    luaL_loadfile(L, filename);
-
-    result = lua_pcall(L, 0, LUA_MULTRET, 0);
-
-    if (result != LUA_OK) {
-        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
-        lua_pop(L, 1);
+    if (cname == NULL && wname == NULL) {
+        return luaL_argerror(L, 1, "class or windows name expected");
     }
 
-    lua_close(L);
+    HWND hw = FindWindow(cname, wname);
 
-    return result;
+    lua_pushinteger(L, (int)hw);
+
+    return 1;
+}
+
+static const luaL_Reg wapilib[] = {
+    { "FindWindow", wapi_FindWindow },
+    { NULL, NULL }
+};
+
+LUAMOD_API int luaopen_wapi(lua_State* L) {
+    luaL_newlib(L, wapilib);
+
+    return 1;
 }
