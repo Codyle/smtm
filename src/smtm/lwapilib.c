@@ -46,9 +46,22 @@ static int wapi_GetWindowThreadProcessId(lua_State* L) {
     return 2;
 }
 
+static int wapi_OpenProcess(lua_State* L) {
+    DWORD access = (DWORD)luaL_optinteger(L, 1, PROCESS_ALL_ACCESS);
+    BOOL inherit = (BOOL)luaL_optinteger(L, 2, 0);
+    DWORD pid = (DWORD)luaL_optinteger(L, 3, 0);
+    HANDLE proc;
+
+    proc = OpenProcess(access, inherit, pid);
+    lua_pushinteger(L, (int)proc);
+
+    return 1;
+}
+
 static const luaL_Reg wapilib[] = {
     { "FindWindow", wapi_FindWindow },
     { "GetWindowThreadProcessId", wapi_GetWindowThreadProcessId },
+    { "OpenProcess", wapi_OpenProcess },
     { NULL, NULL }
 };
 
