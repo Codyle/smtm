@@ -36,8 +36,19 @@ static int wapi_FindWindow(lua_State* L) {
     return 1;
 }
 
+static int wapi_GetWindowThreadProcessId(lua_State* L) {
+    DWORD pid;
+    HWND hw = (HWND)luaL_optinteger(L, 1, 0);
+
+    lua_pushinteger(L, GetWindowThreadProcessId(hw, &pid));
+    lua_pushinteger(L, (int)pid);
+
+    return 2;
+}
+
 static const luaL_Reg wapilib[] = {
     { "FindWindow", wapi_FindWindow },
+    { "GetWindowThreadProcessId", wapi_GetWindowThreadProcessId },
     { NULL, NULL }
 };
 
