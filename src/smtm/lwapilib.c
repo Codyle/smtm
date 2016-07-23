@@ -85,12 +85,21 @@ static int wapi_WriteProcessMemory(lua_State* L) {
     return 2;
 }
 
+static int wapi_GetActiveWindow(lua_State* L) {
+    HWND wnd = GetActiveWindow();
+
+    lua_pushinteger(L, (int)wnd);
+
+    return 1;
+}
+
 static const luaL_Reg wapilib[] = {
     { "FindWindow", wapi_FindWindow },
     { "GetWindowThreadProcessId", wapi_GetWindowThreadProcessId },
     { "OpenProcess", wapi_OpenProcess },
     { "ReadProcessMemory", wapi_ReadProcessMemory },
     { "WriteProcessMemory", wapi_WriteProcessMemory },
+    { "GetActiveWindow", wapi_GetActiveWindow },
     { NULL, NULL }
 };
 
