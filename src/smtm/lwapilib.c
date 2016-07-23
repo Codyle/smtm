@@ -58,10 +58,39 @@ static int wapi_OpenProcess(lua_State* L) {
     return 1;
 }
 
+static int wapi_ReadProcessMemory(lua_State* L) {
+    HANDLE proc = (HANDLE)luaL_optinteger(L, 1, 0);
+    LPCVOID addr = (LPCVOID)luaL_optinteger(L, 2, 0);
+    SIZE_T len = (SIZE_T)luaL_optinteger(L, 3, 1);
+    void* buff = lua_newuserdata(L, len);
+    SIZE_T nr = 0;
+
+    lua_pushboolean(L, ReadProcessMemory(proc, addr, buff, len, &nr));
+    lua_pushlightuserdata(L, buff);
+    lua_pushinteger(L, nr);
+
+    return 3;
+}
+
+static int wapi_WriteProcessMemory(lua_State* L) {
+    HANDLE proc = (HANDLE)luaL_optinteger(L, 1, 0);
+    LPVOID addr = (LPVOID)luaL_optinteger(L, 2, 0);
+    void* buff = lua_touserdata(L, 3);
+    SIZE_T len = (SIZE_T)luaL_optinteger(L, 4, 1);
+    SIZE_T nr = 0;
+
+    lua_pushboolean(L, WriteProcessMemory(proc, addr, buff, len, &nr));
+    lua_pushinteger(L, nr);
+
+    return 2;
+}
+
 static const luaL_Reg wapilib[] = {
     { "FindWindow", wapi_FindWindow },
     { "GetWindowThreadProcessId", wapi_GetWindowThreadProcessId },
     { "OpenProcess", wapi_OpenProcess },
+    { "ReadProcessMemory", wapi_ReadProcessMemory },
+    { "WriteProcessMemory", wapi_WriteProcessMemory },
     { NULL, NULL }
 };
 
