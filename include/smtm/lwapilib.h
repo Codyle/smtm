@@ -22,4 +22,6 @@
 
 LUAMOD_API int (luaopen_wapi)(lua_State* L);
 
+void luaconst_wapi(lua_State* L);
+
 #endif /* __LWAPILIB_H__ */

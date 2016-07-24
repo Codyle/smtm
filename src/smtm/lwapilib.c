@@ -136,6 +136,7 @@ static const luaL_Reg wapilib[] = {
 
 LUAMOD_API int luaopen_wapi(lua_State* L) {
     luaL_newlib(L, wapilib);
+    luaconst_wapi(L);
 
     return 1;
 }
