@@ -19,7 +19,8 @@
 #include <smtm/smtm.h>
 #include <smtm/lsmtmlib.h>
 
-void luaconst_smtm(lua_State* L) {
-    lua_pushstring(L, SMTM_VERSION);
-    lua_setglobal(L, "SMTM_VERSION");
+void luaconst_smtm(lua_State* L)
+{
+	lua_pushstring(L, SMTM_VERSION);
+	lua_setglobal(L, "SMTM_VERSION");
 }

@@ -109,39 +109,39 @@
 */
 #define luaC_condGC(L,pre,pos) \
 	{ if (G(L)->GCdebt > 0) { pre; luaC_step(L); pos;}; \
-	  condchangemem(L,pre,pos); }
+		condchangemem(L,pre,pos); }
 
 /* more often than not, 'pre'/'pos' are empty */
 #define luaC_checkGC(L)		luaC_condGC(L,(void)0,(void)0)
 
 
 #define luaC_barrier(L,p,v) (  \
-	(iscollectable(v) && isblack(p) && iswhite(gcvalue(v))) ?  \
-	luaC_barrier_(L,obj2gco(p),gcvalue(v)) : cast_void(0))
+                               (iscollectable(v) && isblack(p) && iswhite(gcvalue(v))) ?  \
+                               luaC_barrier_(L,obj2gco(p),gcvalue(v)) : cast_void(0))
 
 #define luaC_barrierback(L,p,v) (  \
-	(iscollectable(v) && isblack(p) && iswhite(gcvalue(v))) ? \
-	luaC_barrierback_(L,p) : cast_void(0))
+                                   (iscollectable(v) && isblack(p) && iswhite(gcvalue(v))) ? \
+                                   luaC_barrierback_(L,p) : cast_void(0))
 
 #define luaC_objbarrier(L,p,o) (  \
-	(isblack(p) && iswhite(o)) ? \
-	luaC_barrier_(L,obj2gco(p),obj2gco(o)) : cast_void(0))
+                                  (isblack(p) && iswhite(o)) ? \
+                                  luaC_barrier_(L,obj2gco(p),obj2gco(o)) : cast_void(0))
 
 #define luaC_upvalbarrier(L,uv) ( \
-	(iscollectable((uv)->v) && !upisopen(uv)) ? \
-         luaC_upvalbarrier_(L,uv) : cast_void(0))
+                                  (iscollectable((uv)->v) && !upisopen(uv)) ? \
+                                  luaC_upvalbarrier_(L,uv) : cast_void(0))
 
-LUAI_FUNC void luaC_fix (lua_State *L, GCObject *o);
-LUAI_FUNC void luaC_freeallobjects (lua_State *L);
-LUAI_FUNC void luaC_step (lua_State *L);
-LUAI_FUNC void luaC_runtilstate (lua_State *L, int statesmask);
-LUAI_FUNC void luaC_fullgc (lua_State *L, int isemergency);
-LUAI_FUNC GCObject *luaC_newobj (lua_State *L, int tt, size_t sz);
-LUAI_FUNC void luaC_barrier_ (lua_State *L, GCObject *o, GCObject *v);
-LUAI_FUNC void luaC_barrierback_ (lua_State *L, Table *o);
-LUAI_FUNC void luaC_upvalbarrier_ (lua_State *L, UpVal *uv);
-LUAI_FUNC void luaC_checkfinalizer (lua_State *L, GCObject *o, Table *mt);
-LUAI_FUNC void luaC_upvdeccount (lua_State *L, UpVal *uv);
+LUAI_FUNC void luaC_fix(lua_State *L, GCObject *o);
+LUAI_FUNC void luaC_freeallobjects(lua_State *L);
+LUAI_FUNC void luaC_step(lua_State *L);
+LUAI_FUNC void luaC_runtilstate(lua_State *L, int statesmask);
+LUAI_FUNC void luaC_fullgc(lua_State *L, int isemergency);
+LUAI_FUNC GCObject *luaC_newobj(lua_State *L, int tt, size_t sz);
+LUAI_FUNC void luaC_barrier_(lua_State *L, GCObject *o, GCObject *v);
+LUAI_FUNC void luaC_barrierback_(lua_State *L, Table *o);
+LUAI_FUNC void luaC_upvalbarrier_(lua_State *L, UpVal *uv);
+LUAI_FUNC void luaC_checkfinalizer(lua_State *L, GCObject *o, Table *mt);
+LUAI_FUNC void luaC_upvdeccount(lua_State *L, UpVal *uv);
 
 
 #endif

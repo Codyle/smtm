@@ -23,55 +23,51 @@
 #define OPTS_SHORT_STRING "hv"
 
 static const struct option opt_define[] = {
-        { "version", no_argument, NULL, 'v' },
-        { "help", no_argument, NULL, 'h' },
-        { NULL, 0, NULL, 0 }
+	{ "version", no_argument, NULL, 'v' },
+	{ "help", no_argument, NULL, 'h' },
+	{ NULL, 0, NULL, 0 }
 };
 
-static void display_version(void) {
-    fprintf(stdout, "%s\n", SMTM_VERSION);
+static void display_version(void)
+{
+	fprintf(stdout, "%s\n", SMTM_VERSION);
 }
 
-static void display_help(void) {
-    fprintf(stdout, "usage: smtm [-v|--version] [-h|--help] FILE\n");
+static void display_help(void)
+{
+	fprintf(stdout, "usage: smtm [-v|--version] [-h|--help] FILE\n");
 }
 
-int main(int argc, char** argv) {
-    char* filename;
-
-    do {
-        optopt = getopt_long(argc, argv, OPTS_SHORT_STRING, opt_define, &optind);
-
-        switch (optopt) {
-            case 'v':
-                display_version();
-                return 0;
-            case 'h':
-                display_help();
-                return 0;
-            default:
-                /* You won't actually get here */
-                break;
-        }
-    } while (optopt != -1);
-
-    /* If FILE argument is missing */
-    if (optind >= argc) {
-        display_help();
-        return 0;
-    }
-
-    filename = argv[optind];
-
-    if (_access(filename, 0) == -1) {
-        fprintf(stderr, "file '%s' not exists.\n", filename);
-        return -1;
-    }
-
-    if (_access(filename, 4) == -1) {
-        fprintf(stderr, "file '%s' is not readable.\n", filename);
-        return -1;
-    }
-
-    return smtm_run_script(filename);
+int main(int argc, char** argv)
+{
+	char* filename;
+	do {
+		optopt = getopt_long(argc, argv, OPTS_SHORT_STRING, opt_define, &optind);
+		switch (optopt) {
+			case 'v':
+				display_version();
+				return 0;
+			case 'h':
+				display_help();
+				return 0;
+			default:
+				/* You won't actually get here */
+				break;
+		}
+	} while (optopt != -1);
+	/* If FILE argument is missing */
+	if (optind >= argc) {
+		display_help();
+		return 0;
+	}
+	filename = argv[optind];
+	if (_access(filename, 0) == -1) {
+		fprintf(stderr, "file '%s' not exists.\n", filename);
+		return -1;
+	}
+	if (_access(filename, 4) == -1) {
+		fprintf(stderr, "file '%s' is not readable.\n", filename);
+		return -1;
+	}
+	return smtm_run_script(filename);
 }

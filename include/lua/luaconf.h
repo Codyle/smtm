@@ -177,14 +177,14 @@
 #define LUA_CDIR	"!\\"
 #define LUA_SHRDIR	"!\\..\\share\\lua\\" LUA_VDIR "\\"
 #define LUA_PATH_DEFAULT  \
-		LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
-		LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua;" \
-		LUA_SHRDIR"?.lua;" LUA_SHRDIR"?\\init.lua;" \
-		".\\?.lua;" ".\\?\\init.lua"
+	LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
+	LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua;" \
+	LUA_SHRDIR"?.lua;" LUA_SHRDIR"?\\init.lua;" \
+	".\\?.lua;" ".\\?\\init.lua"
 #define LUA_CPATH_DEFAULT \
-		LUA_CDIR"?.dll;" \
-		LUA_CDIR"..\\lib\\lua\\" LUA_VDIR "\\?.dll;" \
-		LUA_CDIR"loadall.dll;" ".\\?.dll"
+	LUA_CDIR"?.dll;" \
+	LUA_CDIR"..\\lib\\lua\\" LUA_VDIR "\\?.dll;" \
+	LUA_CDIR"loadall.dll;" ".\\?.dll"
 
 #else			/* }{ */
 
@@ -192,11 +192,11 @@
 #define LUA_LDIR	LUA_ROOT "share/lua/" LUA_VDIR "/"
 #define LUA_CDIR	LUA_ROOT "lib/lua/" LUA_VDIR "/"
 #define LUA_PATH_DEFAULT  \
-		LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
-		LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua;" \
-		"./?.lua;" "./?/init.lua"
+	LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
+	LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua;" \
+	"./?.lua;" "./?/init.lua"
 #define LUA_CPATH_DEFAULT \
-		LUA_CDIR"?.so;" LUA_CDIR"loadall.so;" "./?.so"
+	LUA_CDIR"?.so;" LUA_CDIR"loadall.so;" "./?.so"
 #endif			/* } */
 
 
@@ -432,9 +432,9 @@
 ** and therefore its conversion to float may have an ill-defined value.)
 */
 #define lua_numbertointeger(n,p) \
-  ((n) >= (LUA_NUMBER)(LUA_MININTEGER) && \
-   (n) < -(LUA_NUMBER)(LUA_MININTEGER) && \
-      (*(p) = (LUA_INTEGER)(n), 1))
+	((n) >= (LUA_NUMBER)(LUA_MININTEGER) && \
+	 (n) < -(LUA_NUMBER)(LUA_MININTEGER) && \
+	 (*(p) = (LUA_INTEGER)(n), 1))
 
 
 /* now the variable definitions */
@@ -564,7 +564,7 @@
 #else				/* }{ */
 
 #error "Compiler does not support 'long long'. Use option '-DLUA_32BITS' \
-  or '-DLUA_C89_NUMBERS' (see file 'luaconf.h' for details)"
+or '-DLUA_C89_NUMBERS'(see file 'luaconf.h' for details)"
 
 #endif				/* } */
 
@@ -606,7 +606,7 @@
 
 
 /*
-@@ lua_number2strx converts a float to an hexadecimal numeric string. 
+@@ lua_number2strx converts a float to an hexadecimal numeric string.
 ** In C99, 'sprintf' (with format specifiers '%a'/'%A') does that.
 ** Otherwise, you can leave 'lua_number2strx' undefined and Lua will
 ** provide its own implementation.
@@ -728,7 +728,7 @@
 /*
 @@ LUAL_BUFFERSIZE is the buffer size used by the lauxlib buffer system.
 ** CHANGE it if it uses too much C-stack space. (For long double,
-** 'string.format("%.99f", 1e4932)' needs ~5030 bytes, so a
+** 'string.format(" % .99f", 1e4932)' needs ~5030 bytes, so a
 ** smaller buffer would force a memory allocation for each call to
 ** 'string.format'.)
 */
@@ -747,7 +747,7 @@
 ** compatibility only.
 */
 #define LUA_QL(x)	"'" x "'"
-#define LUA_QS		LUA_QL("%s")
+#define LUA_QS		LUA_QL(" % s")
 
 
 

@@ -22,28 +22,21 @@
 #include <smtm/lsmtmlib.h>
 #include <smtm/lwapilib.h>
 
-int smtm_run_script(const char* filename) {
-    lua_State* L;
-    int result;
-
-    L = luaL_newstate();
-    luaL_openlibs(L);
-
-    luaL_requiref(L, "smtm", luaopen_smtm, 1);
-    luaL_requiref(L, "wapi", luaopen_wapi, 1);
-
-    lua_pop(L, 1);
-
-    luaL_loadfile(L, filename);
-
-    result = lua_pcall(L, 0, LUA_MULTRET, 0);
-
-    if (result != LUA_OK) {
-        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
-        lua_pop(L, 1);
-    }
-
-    lua_close(L);
-
-    return result;
+int smtm_run_script(const char* filename)
+{
+	lua_State* L;
+	int result;
+	L = luaL_newstate();
+	luaL_openlibs(L);
+	luaL_requiref(L, "smtm", luaopen_smtm, 1);
+	luaL_requiref(L, "wapi", luaopen_wapi, 1);
+	lua_pop(L, 1);
+	luaL_loadfile(L, filename);
+	result = lua_pcall(L, 0, LUA_MULTRET, 0);
+	if (result != LUA_OK) {
+		fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
+		lua_pop(L, 1);
+	}
+	lua_close(L);
+	return result;
 }
